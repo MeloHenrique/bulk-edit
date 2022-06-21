@@ -2,8 +2,6 @@ import streamlit as st
 from moviepy.editor import *
 import tempfile
 from zipfile import ZipFile
-import shutil
-import base64
 
 
 def edit_videos(videos):
@@ -17,7 +15,8 @@ def edit_videos(videos):
             clip = clip.subclip(0, (clip.duration - 0.3))
             clip = clip.rotate(0.01)
             clip = clip.fx(vfx.colorx, 0.5)
-            editedName = "edited-" + video.name.replace(video.name.split('.')[len(video.name.split('.')) - 1], "") + video.name.split('.')[len(video.name.split('.')) - 1]
+            editedName = "edited-" + video.name.replace(video.name.split('.')[len(video.name.split('.')) - 1], "") + \
+                         video.name.split('.')[len(video.name.split('.')) - 1]
             clip.write_videofile(tmpdirname + "/" + editedName)
             zipObj.write(tmpdirname + "/" + editedName)
             clip.close()
@@ -26,9 +25,11 @@ def edit_videos(videos):
         st.sidebar.download_button('Download 📁', c, file_name="videos.zip")
 
 
-
-
 st.title('Bulk Edit')
+
+video_file = open('tutorial.mp4', 'rb')
+video_bytes = video_file.read()
+st.video(video_bytes)
 
 uploaded_videos = st.sidebar.file_uploader("Upload mp4 file", type=["mp4", "mpeg"], accept_multiple_files=True)
 if uploaded_videos is not None:
