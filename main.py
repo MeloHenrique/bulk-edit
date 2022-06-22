@@ -8,7 +8,7 @@ from zipfile import ZipFile
 def edit_videos(videos):
     seed(1)
     e = randint(0, 1000)
-    zipObj = ZipFile('videos'+e+'.zip', 'w')
+    zipObj = ZipFile('videos'+str(e)+'.zip', 'w')
     for video in videos:
         with open(video.name, mode='wb') as f:
             f.write(video.read())
@@ -23,8 +23,8 @@ def edit_videos(videos):
         zipObj.write(editedName)
         clip.close()
     zipObj.close()
-    with open('videos'+e+'.zip', 'rb') as c:
-        st.sidebar.download_button('Download 📁', c, file_name='videos'+e+'.zip')
+    with open('videos'+str(e)+'.zip', 'rb') as c:
+        st.sidebar.download_button('Download 📁', c, file_name='videos'+str(e)+'.zip')
 
 
 st.title('Bulk Edit')
