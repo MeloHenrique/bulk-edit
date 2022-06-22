@@ -6,20 +6,19 @@ from zipfile import ZipFile
 
 def edit_videos(videos):
     zipObj = ZipFile('videos.zip', 'w')
-    with tempfile.TemporaryDirectory() as tmpdirname:
-        for video in videos:
-            with open(tmpdirname + "/" + video.name, mode='wb') as f:
-                f.write(video.read())
-                f.close()
-            clip = VideoFileClip(tmpdirname + "/" + video.name)
-            clip = clip.subclip(0, (clip.duration - 0.3))
-            clip = clip.rotate(0.01)
-            clip = clip.fx(vfx.colorx, 0.5)
-            editedName = "edited-" + video.name.replace(video.name.split('.')[len(video.name.split('.')) - 1], "") + \
-                         video.name.split('.')[len(video.name.split('.')) - 1]
-            clip.write_videofile(tmpdirname + "/" + editedName)
-            zipObj.write(tmpdirname + "/" + editedName)
-            clip.close()
+    for video in videos:
+        with open(video.name, mode='wb') as f:
+            f.write(video.read())
+            f.close()
+        clip = VideoFileClip(video.name)
+        clip = clip.subclip(0, (clip.duration - 0.3))
+        clip = clip.rotate(0.01)
+        clip = clip.fx(vfx.colorx, 0.99)
+        editedName = "edited-" + video.name.replace(video.name.split('.')[len(video.name.split('.')) - 1], "") + \
+                     video.name.split('.')[len(video.name.split('.')) - 1]
+        clip.write_videofile(editedName)
+        zipObj.write(editedName)
+        clip.close()
     zipObj.close()
     with open("videos.zip", 'rb') as c:
         st.sidebar.download_button('Download 📁', c, file_name="videos.zip")
