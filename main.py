@@ -17,7 +17,7 @@ def edit_videos(videos):
         clip = clip.fx(vfx.colorx, 0.99)
         editedName = "edited-" + video.name.replace(video.name.split('.')[len(video.name.split('.')) - 1], "") + \
                      video.name.split('.')[len(video.name.split('.')) - 1]
-        clip.write_videofile(editedName, threads=4, audio = True, logger = False)
+        clip.write_videofile(editedName, threads=4, audio = True, logger = None)
         zipObj.write(editedName)
         clip.close()
     zipObj.close()
