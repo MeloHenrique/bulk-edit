@@ -1,13 +1,11 @@
 import streamlit as st
 from moviepy.editor import *
-from random import seed
-from random import randint
+import random
 from zipfile import ZipFile
 
 
 def edit_videos(videos):
-    seed(1)
-    e = randint(0, 1000)
+    e = random.randint(0, 9999)
     print(str(e))
     zipObj = ZipFile('videos'+str(e)+'.zip', 'w')
     for video in videos:
