@@ -6,7 +6,6 @@ from zipfile import ZipFile
 
 def edit_videos(videos):
     e = random.randint(0, 9999)
-    print(str(e))
     zipObj = ZipFile('videos'+str(e)+'.zip', 'w')
     for video in videos:
         with open(video.name, mode='wb') as f:
@@ -18,7 +17,7 @@ def edit_videos(videos):
         clip = clip.fx(vfx.colorx, 0.99)
         editedName = "edited-" + video.name.replace(video.name.split('.')[len(video.name.split('.')) - 1], "") + \
                      video.name.split('.')[len(video.name.split('.')) - 1]
-        clip.write_videofile(editedName)
+        clip.write_videofile(editedName, progress_bar = False)
         zipObj.write(editedName)
         clip.close()
     zipObj.close()
