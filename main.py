@@ -1,11 +1,14 @@
 import streamlit as st
 from moviepy.editor import *
-import tempfile
+from random import seed
+from random import randint
 from zipfile import ZipFile
 
 
 def edit_videos(videos):
-    zipObj = ZipFile('videos.zip', 'w')
+    seed(1)
+    e = randint(0, 1000)
+    zipObj = ZipFile('videos'+e+'.zip', 'w')
     for video in videos:
         with open(video.name, mode='wb') as f:
             f.write(video.read())
@@ -20,8 +23,8 @@ def edit_videos(videos):
         zipObj.write(editedName)
         clip.close()
     zipObj.close()
-    with open("videos.zip", 'rb') as c:
-        st.sidebar.download_button('Download 📁', c, file_name="videos.zip")
+    with open('videos'+e+'.zip', 'rb') as c:
+        st.sidebar.download_button('Download 📁', c, file_name='videos'+e+'.zip')
 
 
 st.title('Bulk Edit')
