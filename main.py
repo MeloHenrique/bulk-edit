@@ -8,6 +8,7 @@ from zipfile import ZipFile
 def edit_videos(videos):
     seed(1)
     e = randint(0, 1000)
+    print(str(e))
     zipObj = ZipFile('videos'+str(e)+'.zip', 'w')
     for video in videos:
         with open(video.name, mode='wb') as f:
